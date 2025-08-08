@@ -1,0 +1,50 @@
+#!/bin/bash
+set -e
+
+echo "Current user: $(whoami)"
+
+if [ -d ".ruby-lsp" ]; then
+  echo "Reinstalling Ruby LSP..."
+  rm -rf .ruby-lsp
+else
+  echo ".ruby-lsp directory not found, skipping Ruby LSP installation."
+fi
+
+if [ -f "Gemfile" ]; then
+  echo "Installing Ruby dependencies..."
+  bundle install
+else
+  echo "No Gemfile found, skipping dependencies installation."
+fi
+
+if [ -f "config/database.yml.example" ]; then
+  echo "Copying database.yml..."
+  cp -f config/database.yml.example config/database.yml
+fi
+
+DB_NAME="app_development"
+DB_USER="postgres"
+
+if [ "psql -U '$DB_USER' -lqt | cut -d \| -f 1 | grep -wq '$DB_NAME'" ]; then
+    echo "Database '$DB_NAME' exists."
+else
+    echo "Database '$DB_NAME' does not exist."
+    echo "Creating database '$DB_NAME'..."
+    bin/rails db:create
+fi
+
+if [ -f "bin/rails" ]; then
+  echo "Preparing database..."
+  bin/rails db:prepare
+
+  if [ -d "spec" ]; then
+    echo "Rspec helpers already installed..."
+  else
+    echo "Installing Rspec helpers..."
+    bin/rails generate rspec:install
+  fi
+else
+  echo "bin/rails not found, skipping database."
+fi
+
+echo "Done!"
