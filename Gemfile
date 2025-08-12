@@ -67,5 +67,5 @@ group :test do
   gem "factory_bot_rails"
   gem "faker"
   gem "database_cleaner-active_record"
-  gem "rspec-rails", "~> 8.0", ">= 8.0.1"
+  gem "rspec-rails", "~> 8.0"
 end
