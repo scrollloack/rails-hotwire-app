@@ -52,7 +52,7 @@ group :development, :test do
 
   gem "rubocop", "~> 1.77"
   gem "rubocop-performance", "~> 1.25"
-  gem "rubocop-rails", "~> 2.23", ">= 2.23.1"
+  gem "rubocop-rails", "~> 2.33"
 end
 
 group :development do
