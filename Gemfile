@@ -51,7 +51,7 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   gem "rubocop", "~> 1.77"
-  gem "rubocop-performance", "~> 1.25"
+  gem "rubocop-performance", "~> 1.26"
   gem "rubocop-rails", "~> 2.23", ">= 2.23.1"
 end
 
